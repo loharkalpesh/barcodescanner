@@ -45,8 +45,20 @@ const ScanBarcode = ({ navigation }) => {
         }
     }
 
+    const getData = async () => {
+        try {
+            const t = await AsyncStorage.getItem(Constants.barcodes);
+            if (t != null) {
+                setDataaaa(JSON.parse(t));
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     React.useEffect(() => {
         setBarcodeReaded(false);
+        getData();
     }, [navigation])
 
     React.useEffect(() => {
