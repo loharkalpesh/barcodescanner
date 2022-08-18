@@ -1,39 +1,64 @@
-import { Alert, StyleSheet, Text } from 'react-native';
+import { Alert, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { RNCamera } from 'react-native-camera';
 import Colors from '../utils/Colors';
-import Strings from '../utils/Strings';
+import DialogInput from 'react-native-dialog-input';
 
-const ScanBarcode = () => {
+const ScanBarcode = ({ navigation }) => {
+    const [barcodeReaded, setBarcodeReaded] = React.useState(false);
+    const [dialogVisible, setdialogVisible] = React.useState(false);
+    const [title, setTitle] = React.useState('');
+
     const onBarCodeRead = (e) => {
-        Alert.alert("Barcode value is" + e.data, "Barcode type is" + e.type);
+        setBarcodeReaded(true);
+        setdialogVisible(true);
+        console.log("Barcode value is" + e.data, "Barcode type is" + e.type);
     }
 
+    const submitInput = (input) => {
+        setTitle(input);
+        console.log(input);
+        setdialogVisible(false);
+        navigation.pop();
+    }
+
+    React.useEffect(() => {
+        setBarcodeReaded(false);
+    }, [navigation])
+
     return (
-        <RNCamera
-            style={{
-                flex: 1,
-                justifyContent: 'flex-end',
-                alignItems: 'center'
-            }}
-            torchMode={RNCamera.Constants.FlashMode.auto}
-            onBarCodeRead={onBarCodeRead}
-            captureAudio={false}>
-            <Text style={styles.text}>{Strings.barcode_scanner}</Text>
-        </RNCamera>
+        <>
+            <RNCamera
+                style={{
+                    flex: 1,
+                    justifyContent: 'flex-end',
+                    alignItems: 'center'
+                }}
+                dialogStyle={{ color: Colors.black }}
+                torchMode={RNCamera.Constants.FlashMode.auto}
+                onBarCodeRead={onBarCodeRead}
+                barCodeTypes={barcodeReaded ? [] : [RNCamera.Constants.BarCodeType.code128]}
+                captureAudio={false}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: "column", flex: 1 }}>
+                    <View style={styles.border} />
+                </View>
+            </RNCamera>
+            <DialogInput isDialogVisible={dialogVisible}
+                title="Barcode Title"
+                message="Enter Barcode title to save"
+                submitInput={(inputText) => { submitInput(inputText) }}
+                closeDialog={() => { setdialogVisible(true) }} />
+        </>
     )
 }
 
 export default ScanBarcode
 
 const styles = StyleSheet.create({
-    text: {
-        backgroundColor: Colors.white,
-        color: Colors.primary,
-        width: '100%',
-        textAlign: 'center',
-        padding: 30,
-        fontSize: 20,
-        fontWeight: '900'
+    border: {
+        borderColor: Colors.black,
+        borderWidth: 1,
+        height: 100,
+        width: 270,
     }
 })
