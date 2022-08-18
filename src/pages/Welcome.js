@@ -29,10 +29,8 @@ const Welcome = ({ navigation }) => {
         },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('Camera permission Accepted');
         navigation.push(Strings.ScanBarcodeScreen);
       } else {
-        console.log('Camera permission denied');
       }
     } catch (err) {
       console.warn(err);

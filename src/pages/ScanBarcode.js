@@ -1,30 +1,57 @@
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import { RNCamera } from 'react-native-camera';
 import Colors from '../utils/Colors';
 import DialogInput from 'react-native-dialog-input';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Constants from '../utils/Constants';
 
 const ScanBarcode = ({ navigation }) => {
+    const [data, setDataaaa] = React.useState([]);
     const [barcodeReaded, setBarcodeReaded] = React.useState(false);
     const [dialogVisible, setdialogVisible] = React.useState(false);
+
     const [title, setTitle] = React.useState('');
+    const [value, setValue] = React.useState('');
 
     const onBarCodeRead = (e) => {
         setBarcodeReaded(true);
         setdialogVisible(true);
-        console.log("Barcode value is" + e.data, "Barcode type is" + e.type);
+        setValue(e.data);
     }
 
-    const submitInput = (input) => {
+    const setData = async () => {
+        try {
+            await AsyncStorage.setItem(Constants.barcodes, JSON.stringify(data));
+        } catch (error) {
+            console.log("There are some error", error);
+        }
+    };
+
+    const submitInput = async (input) => {
         setTitle(input);
-        console.log(input);
         setdialogVisible(false);
-        navigation.pop();
+        try {
+            const newD = {
+                id: data.length + 1,
+                title: input,
+                value: value,
+            };
+            setDataaaa([...data, newD]);
+            console.log([...data, newD]);
+            navigation.pop();
+        } catch (error) {
+
+        }
     }
 
     React.useEffect(() => {
         setBarcodeReaded(false);
     }, [navigation])
+
+    React.useEffect(() => {
+        setData();
+    }, [data])
 
     return (
         <>
