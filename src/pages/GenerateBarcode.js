@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Barcode from "react-native-barcode-builder";
 import Colors from '../utils/Colors';
+import Header from '../components/Header';
 
 const GenerateBarcode = ({ navigation }) => {
     const [string, setString] = React.useState(null);
@@ -18,14 +19,16 @@ const GenerateBarcode = ({ navigation }) => {
     }, [navigation])
 
     return (
-        string !== null && (
-            <View style={styles.screen}>
-                <View style={styles.card}>
-                    <Barcode value={string} format="CODE128" />
-                    <Text style={styles.text}>{string}</Text>
-                </View>
-            </View>
-        )
+        <>
+            <Header title={'Generate Barcode'} />
+            {string !== null && (
+                <View style={[styles.screen, { marginTop: -20 }]}>
+                    <View style={styles.card}>
+                        <Barcode value={string} format="CODE128" />
+                        <Text style={styles.text}>{string}</Text>
+                    </View>
+                </View>)}
+        </>
     )
 }
 

@@ -4,6 +4,7 @@ import Colors from '../utils/Colors';
 import Barcode from 'react-native-barcode-builder';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from '../utils/Constants';
+import Header from '../components/Header';
 
 const ListItem = ({ item }) => {
     return (
@@ -42,12 +43,15 @@ const History = ({ navigation }) => {
     }, [navigation])
 
     return (
-        data.length > 0 && <FlatList
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ padding: 20 }}
-            data={data}
-            renderItem={({ item }) => <ListItem item={item} />}
-        />
+        <>
+            <Header title={"History"} />
+            {data.length > 0 && (<FlatList
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ padding: 20 }}
+                data={data}
+                renderItem={({ item }) => <ListItem item={item} />}
+            />)}
+        </>
     )
 }
 
