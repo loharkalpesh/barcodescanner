@@ -1,18 +1,42 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { PermissionsAndroid, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react';
 import Colors from '../utils/Colors';
 import Strings from '../utils/Strings';
 
 const Welcome = ({ navigation }) => {
-
   const goToGenerateBarCode = () => {
     navigation.push(Strings.GenerateBarcodeScreen);
   }
+
   const goToScanBarCode = () => {
-    navigation.push(Strings.ScanBarcodeScreen);
+    takePermission();
   }
+
   const goToHistory = () => {
     navigation.push(Strings.HistoryScreen);
+  }
+
+  const takePermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: 'App Camera Permission',
+          message: 'App needs access to your camera ',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('Camera permission Accepted');
+        navigation.push(Strings.ScanBarcodeScreen);
+      } else {
+        console.log('Camera permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
   }
 
   return (
