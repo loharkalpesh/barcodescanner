@@ -29,19 +29,20 @@ const ScanBarcode = ({ navigation }) => {
     };
 
     const submitInput = async (input) => {
-        setTitle(input);
-        setdialogVisible(false);
-        try {
-            const newD = {
-                id: data.length + 1,
-                title: input,
-                value: value,
-            };
-            setDataaaa([...data, newD]);
-            console.log([...data, newD]);
-            navigation.pop();
-        } catch (error) {
-
+        if (input !== '') {
+            setTitle(input);
+            setdialogVisible(false);
+            try {
+                const newD = {
+                    id: data.length + 1,
+                    title: input,
+                    value: value,
+                };
+                setDataaaa([...data, newD]);
+                console.log([...data, newD]);
+                navigation.pop();
+            } catch (error) {
+            }
         }
     }
 
