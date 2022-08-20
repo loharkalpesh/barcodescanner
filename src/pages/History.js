@@ -19,7 +19,16 @@ const ListItem = ({ item }) => {
                     {item?.title}
                 </Text>
             </View>
-            <Barcode height={25} width={0.9} value={item?.value} format="CODE128" />
+            <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                <Barcode height={25} width={0.9} value={item?.value} format="CODE128" />
+                <Text
+                    style={{
+                        fontWeight: '500',
+                        color: Colors.black,
+                    }}>
+                    {item?.value}
+                </Text>
+            </View>
         </View>
     );
 };
