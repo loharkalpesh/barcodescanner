@@ -1,4 +1,4 @@
-package com.barcodescanner;
+package com.kalpeshlohar.barcodescanner;
 
 import android.app.Application;
 import android.content.Context;
@@ -9,7 +9,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
-import com.barcodescanner.newarchitecture.MainApplicationReactNativeHost;
+import com.kalpeshlohar.barcodescanner.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -73,7 +73,7 @@ public class MainApplication extends Application implements ReactApplication {
          We use reflection here to pick up the class that initializes Flipper,
         since Flipper library is not available in release mode
         */
-        Class<?> aClass = Class.forName("com.barcodescanner.ReactNativeFlipper");
+        Class<?> aClass = Class.forName("com.kalpeshlohar.barcodescanner.ReactNativeFlipper");
         aClass
             .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
             .invoke(null, context, reactInstanceManager);

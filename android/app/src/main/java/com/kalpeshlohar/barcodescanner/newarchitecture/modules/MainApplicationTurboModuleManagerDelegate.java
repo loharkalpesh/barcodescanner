@@ -1,4 +1,4 @@
-package com.barcodescanner.newarchitecture.modules;
+package com.kalpeshlohar.barcodescanner.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;
